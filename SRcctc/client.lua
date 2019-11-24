@@ -224,7 +224,7 @@ print"starting CC"
 					DrawRect(UI.x + 0.06, UI.y - 0.03, throttle/12, 0.01, sr, sg, 0, 255)
 				end
 				if Config.Watermark2 then
-					drawTxtb(UI.x - 0.0 ,UI.y - 0.01 ,0.27,"By DOJSRC", 255,255,255,255)
+					drawTxtb(UI.x + 0.01 ,UI.y - 0.03 ,0.27,"By DOJSRC", 255,255,255,255)
 				end
 	if Config.SimpleCCimmage then
 	DrawSprite('cctcimages','SRCC1',UI.x - 0.0 ,UI.y - 0.01,0.023,0.04,0.0,255,255,255,200)
