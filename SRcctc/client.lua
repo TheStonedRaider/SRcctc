@@ -63,125 +63,123 @@ Citizen.CreateThread(function()
 	end
 end)
 
+
 function TC()
-	if tc == false then
-		tc = true
-		local playerped = PlayerPedId()
-		local veh =	GetVehiclePedIsIn(playerped, false)
-		local ped = PlayerPedId()
-		local vehicle = GetVehiclePedIsIn(ped)
-		local oldvalue = GetVehicleHandlingFloat(vehicle, 'CHandlingData', 'fLowSpeedTractionLossMult')
-		local newvalue2 = oldvalue / 1.6
-		local newvalue3 = oldvalue / 1.5
-		local newvalue4 = oldvalue / 1.4
-		local newvalue5 = oldvalue / 1.2
+if tc == false then
+tc = true
+playerped = GetPlayerPed(-1)
+		local veh =	GetVehiclePedIsIn(playerped,false)
+		local drivebias = GetVehicleHandlingFloat(veh,"CHandlingData", "fDriveBiasFront")
+local ped = GetPlayerPed(-1)
+local vehicle = GetVehiclePedIsIn(ped)
+oldvalue = GetVehicleHandlingFloat(vehicle,'CHandlingData','fLowSpeedTractionLossMult')		
 
 		repeat
-			Wait(0)
+		Wait(0)
+		if tcacting == true then
+		SetVehicleHandlingField(vehicle,'CHandlingData','fLowSpeedTractionLossMult',newvalue5)	
+SetVehicleEngineTorqueMultiplier(veh, var1)
+else
+SetVehicleHandlingField(vehicle,'CHandlingData','fLowSpeedTractionLossMult',oldvalue)	
+SetVehicleEngineTorqueMultiplier(veh, 1.0)
+end
+var1 = 1.0		
+	mod1 = 0.0	
+newvalue5 = oldvalue
 
-			local wh1 = GetVehicleWheelSpeed(veh, 0)
-			wh1 = (GetVehicleWheelSpeed(veh, 1) + wh1) / 2
-			local wh2 = (GetVehicleWheelSpeed(veh, 1) + wh1) / 2
-			local wh3 = GetVehicleWheelSpeed(veh, 2)
-			local wh4 = GetVehicleWheelSpeed(veh, 3)
-			local wheelave = (GetVehicleWheelSpeed(veh, 0) + GetVehicleWheelSpeed(veh, 1) + GetVehicleWheelSpeed(veh, 2) + GetVehicleWheelSpeed(veh, 3)) / 4
+	tcacting = false	
+		
+		
+wh1 = GetVehicleWheelSpeed(veh,0)
+wh1 = (GetVehicleWheelSpeed(veh,1) + wh1) / 2 
+wh2 = (GetVehicleWheelSpeed(veh,1) + wh1) / 2 
+wh3 = GetVehicleWheelSpeed(veh,2)
+wh4 = GetVehicleWheelSpeed(veh,3) 
+throttle = 0.0 
+wheelave = (GetVehicleWheelSpeed(veh,0) + GetVehicleWheelSpeed(veh,1) + GetVehicleWheelSpeed(veh,2) + GetVehicleWheelSpeed(veh,3)) / 4
 
-			DrawRect(UITC.x + 0.01, UITC.y + 0.04, 0.04, 0.01, 0, 0, 0, 255)
-			local steerang = GetVehicleSteeringAngle(veh)
-			local mod1, mod2
-			if steerang > 30 or steerang < -30.0 then
-				mod1 = 1.3
-				mod2 = 1.9
-			else
-				mod1 = 0.5
-				mod2 = 0.7
-			end
+DrawRect(UITC.x + 0.01 ,UITC.y + 0.04 ,0.05,0.01,0,0,0,255)
+steerang = GetVehicleSteeringAngle(veh)
+if steerang > 1 then
+mod1 = steerang / 20
+elseif steerang < -1.0 then
+steerang = steerang - steerang*2
+mod1 = steerang / 20
+end
+--print("1",wh3,wh3 - (wheelave + 1.7 + mod1))
+--print("2",wh4,wh4 - (wheelave + 1.7 + mod1))
+--print("3",(wheelave + 1.7 + mod1) - wh3)
+--print("4",(wheelave + 1.7 + mod1) - wh4)
 
-			SetVehicleHandlingField(vehicle, 'CHandlingData', 'fLowSpeedTractionLossMult', oldvalue)
-			SetVehicleEngineTorqueMultiplier(veh, 1.0)
-			if wh1 > (wheelave + 1.7 + mod1) then
-				SetVehicleEngineTorqueMultiplier(veh, 0.2)
-				SetVehicleHandlingField(vehicle, 'CHandlingData', 'fLowSpeedTractionLossMult', newvalue5)
-				DrawRect(UITC.x - 0.005, UITC.y + 0.04, 0.01, 0.01, 233, 0, 0, 255)
-			elseif  wh2 > (wheelave + 1.7 + mod1) then
-				SetVehicleEngineTorqueMultiplier(veh, 0.2)
-				SetVehicleHandlingField(vehicle, 'CHandlingData', 'fLowSpeedTractionLossMult', newvalue5)
-				DrawRect(UITC.x - 0.005, UITC.y + 0.04, 0.01, 0.01, 230, 0, 0, 255)
-			elseif  wh3 > (wheelave + 1.7 + mod1) then
-				SetVehicleEngineTorqueMultiplier(veh, 0.2)
-				SetVehicleHandlingField(vehicle, 'CHandlingData', 'fLowSpeedTractionLossMult', newvalue5)
-				DrawRect(UITC.x - 0.005, UITC.y + 0.04, 0.01, 0.01, 230, 0, 0, 255)
-			elseif  wh4 > (wheelave + 1.7 + mod1) then
-				SetVehicleEngineTorqueMultiplier(veh, 0.2)
-				SetVehicleHandlingField(vehicle, 'CHandlingData', 'fLowSpeedTractionLossMult', newvalue5)
-				DrawRect(UITC.x - 0.005, UITC.y + 0.04, 0.01, 0.01, 230, 0, 0, 255)
-			elseif wh1 > (wheelave + 1.2 + mod1) then
-				SetVehicleEngineTorqueMultiplier(veh, 0.4)
-				SetVehicleHandlingField(vehicle, 'CHandlingData', 'fLowSpeedTractionLossMult', newvalue4)
-				DrawRect(UITC.x + 0.005, UITC.y + 0.04, 0.01, 0.01, 200, 86, 0, 255)
-			elseif  wh2 > (wheelave + 1.2 + mod1) then
-				SetVehicleEngineTorqueMultiplier(veh, 0.4)
-				SetVehicleHandlingField(vehicle, 'CHandlingData', 'fLowSpeedTractionLossMult', newvalue4)
-				DrawRect(UITC.x + 0.005, UITC.y + 0.04, 0.01, 0.01, 200, 86, 0, 255)
-			elseif  wh3 > (wheelave + 1.2 + mod1) then
-				SetVehicleEngineTorqueMultiplier(veh, 0.4)
-				SetVehicleHandlingField(vehicle, 'CHandlingData', 'fLowSpeedTractionLossMult', newvalue4)
-				DrawRect(UITC.x + 0.005, UITC.y + 0.04, 0.01, 0.01, 200, 86, 0, 255)
-			elseif  wh4 > (wheelave + 1.2 + mod1) then
-				SetVehicleEngineTorqueMultiplier(veh, 0.4)
-				SetVehicleHandlingField(vehicle, 'CHandlingData', 'fLowSpeedTractionLossMult', newvalue4)
-				DrawRect(UITC.x + 0.005, UITC.y + 0.04, 0.01, 0.01, 200, 86, 0, 255)
-			elseif wh1 > (wheelave + mod2) then
-				SetVehicleEngineTorqueMultiplier(veh, 0.5)
-				SetVehicleHandlingField(vehicle, 'CHandlingData', 'fLowSpeedTractionLossMult', newvalue3)
-				DrawRect(UITC.x + 0.015, UITC.y + 0.04, 0.01, 0.01, 200, 200, 0, 255)
-			elseif  wh2 > (wheelave + mod2) then
-				SetVehicleEngineTorqueMultiplier(veh, 0.5)
-				SetVehicleHandlingField(vehicle, 'CHandlingData', 'fLowSpeedTractionLossMult', newvalue3)
-				DrawRect(UITC.x + 0.015, UITC.y + 0.04, 0.01, 0.01, 200, 200, 0, 255)
-			elseif  wh3 > (wheelave + mod2) then
-				SetVehicleEngineTorqueMultiplier(veh, 0.5)
-				SetVehicleHandlingField(vehicle, 'CHandlingData', 'fLowSpeedTractionLossMult', newvalue3)
-				DrawRect(UITC.x + 0.015, UITC.y + 0.04, 0.01, 0.01, 200, 200, 0, 255)
-			elseif  wh4 > (wheelave + mod2) then
-				SetVehicleEngineTorqueMultiplier(veh, 0.5)
-				SetVehicleHandlingField(vehicle, 'CHandlingData', 'fLowSpeedTractionLossMult', newvalue3)
-				DrawRect(UITC.x + 0.015, UITC.y + 0.04, 0.01, 0.01, 200, 200, 0, 255)
-			elseif wh1 > (wheelave + mod1) then
-				SetVehicleEngineTorqueMultiplier(veh, 0.8)
-				SetVehicleHandlingField(vehicle, 'CHandlingData', 'fLowSpeedTractionLossMult', newvalue2)
-				DrawRect(UITC.x + 0.025, UITC.y + 0.04, 0.01, 0.01, 0, 255, 0, 255)
-			elseif  wh2 > (wheelave + mod1) then
-				SetVehicleEngineTorqueMultiplier(veh, 0.8)
-				SetVehicleHandlingField(vehicle, 'CHandlingData', 'fLowSpeedTractionLossMult', newvalue2)
-				DisableControlAction(0,71,true)
-				DrawRect(UITC.x + 0.025, UITC.y + 0.04, 0.01, 0.01, 0, 255, 0, 255)
-			elseif  wh3 > (wheelave + mod1) then
-				SetVehicleEngineTorqueMultiplier(veh, 0.8)
-				SetVehicleHandlingField(vehicle, 'CHandlingData', 'fLowSpeedTractionLossMult', newvalue2)
-				DrawRect(UITC.x + 0.025, UITC.y + 0.04, 0.01, 0.01, 0, 255, 0, 255)
-			elseif  wh4 > (wheelave + mod1) then
-				SetVehicleEngineTorqueMultiplier(veh, 0.8)
-				SetVehicleHandlingField(vehicle, 'CHandlingData', 'fLowSpeedTractionLossMult', newvalue2)
-				DrawRect(UITC.x + 0.025, UITC.y + 0.04, 0.01, 0.01, 0, 255, 0, 255)
-			end
+	if wh1 > (wheelave + 0.15 + mod1) then
+var1 = 1.0 / ((wh1 - (wheelave + 0.00 + mod1) )- 0.14) *Config.action
+newvalue5 = oldvalue * var1
+tcacting = true
+elseif  wh2 > (wheelave + 0.15 + mod1) then
+var1 = 1.0 / ((wh2 - (wheelave + 0.00 + mod1) )- 0.14) *Config.action
+newvalue5 = oldvalue * var1 
+tcacting = true
+elseif  wh3 > (wheelave + 0.15 + mod1) then
+var1 = 1.0 / ((wh3 - (wheelave + 0.00 + mod1) )- 0.14) *Config.action
+newvalue5 = oldvalue * var1
+tcacting = true
+elseif  wh4 > (wheelave + 0.15 + mod1) then
+var1 = 1.0 / ((wh4 - (wheelave + 0.00 + mod1) )- 0.14) *Config.action
+newvalue5 = oldvalue * var1
 
-			drawTxta(UITC.x - 0.0, UITC.y + 0.0, 0.55, "~w~TC ~g~ON", 255, 50, 0, 255)
-			if Config.Watermark then drawTxtb(UITC.x - 0.01, UITC.y + 0.041, 0.27, "By DOJSRC", 255, 255, 255, 255) end
+tcacting = true
+end
+if tcacting == true then
+if newvalue5 > 0.0 and newvalue5 < oldvalue  then
+SetVehicleHandlingField(vehicle,'CHandlingData','fLowSpeedTractionLossMult',newvalue5)
+newvalue5 = oldvalue * var1
+elseif newvalue5 > oldvalue then
+newvalue5 = oldvalue * var1
+SetVehicleHandlingField(vehicle,'CHandlingData','fLowSpeedTractionLossMult',newvalue5)
+elseif newvalue5 < 0.0 then
+newvalue5 = 0.01
+SetVehicleHandlingField(vehicle,'CHandlingData','fLowSpeedTractionLossMult',newvalue5)
+end
+if var1 < 1.0 then
+SetVehicleEngineTorqueMultiplier(veh, var1)
+if var1 < 0.98 then
+DrawRect(UITC.x - 0.01 ,UITC.y + 0.04 ,0.01,0.01,0,255,0,255)
+end
+if var1 < 0.7 then
+DrawRect(UITC.x - 0.00 ,UITC.y + 0.04 ,0.01,0.01,100,200,0,255)
+end
+if var1 < 0.5 then
+DrawRect(UITC.x + 0.01 ,UITC.y + 0.04 ,0.01,0.01,150,200,0,255)
+end
+if var1 < 0.3 then
+DrawRect(UITC.x + 0.02 ,UITC.y + 0.04 ,0.01,0.01,150,100,0,255)
+end
+if var1 < 0.2 then
+DrawRect(UITC.x + 0.03 ,UITC.y + 0.04 ,0.01,0.01,233,0,0,255)
+end
+else
+var1 = 1.0
+SetVehicleEngineTorqueMultiplier(veh, var1)
+end
 
-			if IsControlJustPressed(0, Config.TCkey) or IsControlJustPressed(0, Config.TCkey) then
-				SetVehicleMaxSpeed(veh,300.0)
-				tc = false
-			elseif IsPedInAnyVehicle(playerped,true) == false then
-				tc = false
-			end
+end
+drawTxta(UITC.x + 0.20 ,UITC.y + 0.0 , 1.0,1.0,0.55,""..oldvalue.."", 255,50,0,255)
+drawTxta(UITC.x + 0.10 ,UITC.y + 0.0 , 1.0,1.0,0.55,""..newvalue5.."", 255,50,0,255)
+drawTxta(UITC.x - 0.1 ,UITC.y + 0.0 , 1.0,1.0,0.55,""..var1.."", 255,50,0,255)
+drawTxta(UITC.x - 0.0 ,UITC.y + 0.0 , 1.0,1.0,0.55,"~w~TC ~g~ON", 255,50,0,255)
+drawTxtb(UITC.x - 0.01 ,UITC.y + 0.041 , 1.0,1.0,0.27,"By DOJSRC", 255,255,255,255)
+if IsControlJustPressed(0,Config.TCkey) or IsControlJustPressed(0,Config.TCkey) then
+						SetVehicleMaxSpeed(veh,300.0)
+tc = false
+elseif IsPedInAnyVehicle(playerped,true) == false then
+tc = false
+end
 
-		until tc == false
-
-		SetVehicleHandlingField(vehicle, 'CHandlingData', 'fLowSpeedTractionLossMult', oldvalue)
-		tc = false
-		Wait(200)
-	end
+until tc == false
+SetVehicleHandlingField(vehicle,'CHandlingData','fLowSpeedTractionLossMult',oldvalue)
+tc = false
+Wait(200)
+end
 end
 
 function Cruse()
