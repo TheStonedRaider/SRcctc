@@ -14,21 +14,31 @@ Config.Minspeed = 0.1 --- In meters per second 0.1 = 0.2mph
 
 Config.action = 0.2     --- How much the TC wil try to stop you sliding Lower = more help
 
-Config.OnScreenText = true --- Enable/Disable On-Screen text
+Config.OnScreenTextCC = true --- Enable/Disable On-Screen text
+
+Config.OnScreendisplayCC = true --- Enable/Disable On-Screen display/colours
+
+Config.SimpleCCimmage = true --- a small symbol 
+
+Config.OnScreenTextTC = true --- Enable/Disable On-Screen text
 
 Config.OnScreendisplayTC = true --- Enable/Disable On-Screen display/colours
 
+Config.SimpleTCimmage = true --- a small symbol 
+
 Config.Watermark = true --- Enable/Disable Watermark
+
+Config.Watermark2 = true --- Enable/Disable Watermark 
 
  UITC = {
 
-	x =  0.82 ,	-- TC Screen Coords 	0.0-1.0 left to right 
-	y = 0.720 ,	-- TC Screen Coords 	0.0-1.0 = top to bottom
+	x =  0.82 ,	-- Traction Control Screen Coords 	0.0-1.0 left to right 
+	y = 0.720 ,	-- Traction Control Screen Coords 	0.0-1.0 = top to bottom
 
 }
  UI = {
 
-	x =  0.570 ,	-- CC Screen Coords 	0.0-1.0 left to right 
-	y = 0.440 ,	-- CC Screen Coords 	0.0-1.0 = top to bottom
+	x =  0.82 ,	-- Cruise Control Screen Coords 	0.0-1.0 left to right 
+	y = 0.75 ,	-- Cruise Control Screen Coords 	0.0-1.0 = top to bottom
 
 }
