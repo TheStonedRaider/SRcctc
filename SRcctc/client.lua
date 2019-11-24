@@ -77,8 +77,8 @@ oldvalue = GetVehicleHandlingFloat(vehicle,'CHandlingData','fLowSpeedTractionLos
 		repeat
 		Wait(0)
 		if tcacting == true then
-		SetVehicleHandlingField(vehicle,'CHandlingData','fLowSpeedTractionLossMult',newvalue5)	
-SetVehicleEngineTorqueMultiplier(veh, var1)
+	--	SetVehicleHandlingField(vehicle,'CHandlingData','fLowSpeedTractionLossMult',newvalue5)	
+--SetVehicleEngineTorqueMultiplier(veh, var1)
 else
 SetVehicleHandlingField(vehicle,'CHandlingData','fLowSpeedTractionLossMult',oldvalue)	
 SetVehicleEngineTorqueMultiplier(veh, 1.0)
@@ -111,20 +111,20 @@ end
 --print("3",(wheelave + 1.7 + mod1) - wh3)
 --print("4",(wheelave + 1.7 + mod1) - wh4)
 
-	if wh1 > (wheelave + 0.15 + mod1) then
-var1 = 1.0 / ((wh1 - (wheelave + 0.00 + mod1) )- 0.14) *Config.action
+	if wh1 > (wheelave + 0.05 + mod1) then
+var1 = 1.0 / ((wh1 - (wheelave + 0.00 + mod1) )- 0.04) *Config.action
 newvalue5 = oldvalue * var1
 tcacting = true
-elseif  wh2 > (wheelave + 0.15 + mod1) then
-var1 = 1.0 / ((wh2 - (wheelave + 0.00 + mod1) )- 0.14) *Config.action
+elseif  wh2 > (wheelave + 0.05 + mod1) then
+var1 = 1.0 / ((wh2 - (wheelave + 0.00 + mod1) )- 0.04) *Config.action
 newvalue5 = oldvalue * var1 
 tcacting = true
-elseif  wh3 > (wheelave + 0.15 + mod1) then
-var1 = 1.0 / ((wh3 - (wheelave + 0.00 + mod1) )- 0.14) *Config.action
+elseif  wh3 > (wheelave + 0.05 + mod1) then
+var1 = 1.0 / ((wh3 - (wheelave + 0.00 + mod1) )- 0.04) *Config.action
 newvalue5 = oldvalue * var1
 tcacting = true
-elseif  wh4 > (wheelave + 0.15 + mod1) then
-var1 = 1.0 / ((wh4 - (wheelave + 0.00 + mod1) )- 0.14) *Config.action
+elseif  wh4 > (wheelave + 0.05 + mod1) then
+var1 = 1.0 / ((wh4 - (wheelave + 0.00 + mod1) )- 0.04) *Config.action
 newvalue5 = oldvalue * var1
 
 tcacting = true
@@ -143,19 +143,19 @@ end
 if var1 < 1.0 then
 SetVehicleEngineTorqueMultiplier(veh, var1)
 if var1 < 0.98 then
-DrawRect(UITC.x - 0.01 ,UITC.y + 0.04 ,0.01,0.01,0,255,0,255)
+drawbox(UITC.x - 0.01 ,UITC.y + 0.04,0,255)
 end
 if var1 < 0.7 then
-DrawRect(UITC.x - 0.00 ,UITC.y + 0.04 ,0.01,0.01,100,200,0,255)
+drawbox(UITC.x - 0.00 ,UITC.y + 0.04 ,100,200)
 end
 if var1 < 0.5 then
-DrawRect(UITC.x + 0.01 ,UITC.y + 0.04 ,0.01,0.01,150,200,0,255)
+drawbox(UITC.x + 0.01 ,UITC.y + 0.04 ,150,200)
 end
 if var1 < 0.3 then
-DrawRect(UITC.x + 0.02 ,UITC.y + 0.04 ,0.01,0.01,150,100,0,255)
+drawbox(UITC.x + 0.02 ,UITC.y + 0.04 ,150,100)
 end
 if var1 < 0.2 then
-DrawRect(UITC.x + 0.03 ,UITC.y + 0.04 ,0.01,0.01,233,0,0,255)
+drawbox(UITC.x + 0.03 ,UITC.y + 0.04,233,0)
 end
 else
 var1 = 1.0
@@ -163,11 +163,12 @@ SetVehicleEngineTorqueMultiplier(veh, var1)
 end
 
 end
-drawTxta(UITC.x + 0.20 ,UITC.y + 0.0 , 1.0,1.0,0.55,""..oldvalue.."", 255,50,0,255)
-drawTxta(UITC.x + 0.10 ,UITC.y + 0.0 , 1.0,1.0,0.55,""..newvalue5.."", 255,50,0,255)
-drawTxta(UITC.x - 0.1 ,UITC.y + 0.0 , 1.0,1.0,0.55,""..var1.."", 255,50,0,255)
+if Config.OnScreenText == true then
 drawTxta(UITC.x - 0.0 ,UITC.y + 0.0 , 1.0,1.0,0.55,"~w~TC ~g~ON", 255,50,0,255)
+end
+if Config.Watermark then
 drawTxtb(UITC.x - 0.01 ,UITC.y + 0.041 , 1.0,1.0,0.27,"By DOJSRC", 255,255,255,255)
+end
 if IsControlJustPressed(0,Config.TCkey) or IsControlJustPressed(0,Config.TCkey) then
 						SetVehicleMaxSpeed(veh,300.0)
 tc = false
@@ -179,6 +180,13 @@ until tc == false
 SetVehicleHandlingField(vehicle,'CHandlingData','fLowSpeedTractionLossMult',oldvalue)
 tc = false
 Wait(200)
+end
+end
+
+function drawbox(x,y,r,g)
+if Config.OnScreendisplayTC == true then
+
+DrawRect(x,y,0.01,0.01,r,g,0,255)
 end
 end
 
