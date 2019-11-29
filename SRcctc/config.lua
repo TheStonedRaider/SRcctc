@@ -30,6 +30,8 @@ Config.Watermark = true --- Enable/Disable Watermark
 
 Config.Watermark2 = true --- Enable/Disable Watermark 
 
+Config.enableTCtoggle = true
+
  UITC = {
 
 	x =  0.82 ,	-- Traction Control Screen Coords 	0.0-1.0 left to right 
