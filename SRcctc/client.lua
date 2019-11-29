@@ -53,11 +53,19 @@ function TC()
 playerped = GetPlayerPed(-1)
 local veh =	GetVehiclePedIsIn(playerped,false)
 local drivebias = GetVehicleHandlingFloat(veh,"CHandlingData", "fDriveBiasFront")
-local ped = GetPlayerPed(-1)
-local vehicle = GetVehiclePedIsIn(ped)
+
 oldvalue = GetVehicleHandlingFloat(vehicle,'CHandlingData','fLowSpeedTractionLossMult')		
 repeat
 Wait(0)
+if IsPedGettingIntoAVehicle(playerped) then
+Wait(2000)
+local veh =	GetVehiclePedIsIn(playerped,false)
+local drivebias = GetVehicleHandlingFloat(veh,"CHandlingData", "fDriveBiasFront")
+oldvalue = GetVehicleHandlingFloat(vehicle,'CHandlingData','fLowSpeedTractionLossMult')	
+end
+
+
+if IsPedInAnyVehicle(playerped) then
 	if tcacting == true then
 	--	SetVehicleHandlingField(vehicle,'CHandlingData','fLowSpeedTractionLossMult',newvalue5)	
 	--SetVehicleEngineTorqueMultiplier(veh, var1)
@@ -156,10 +164,10 @@ else
 	if IsControlJustPressed(0,Config.TCkey) or IsControlJustPressed(0,Config.TCkey) then
 	SetVehicleMaxSpeed(veh,300.0)
 	tc = false
-	elseif IsPedInAnyVehicle(playerped,true) == false then
+	elseif IsPedInAnyVehicle(playerped,true) == false and Config.enableTCtoggle == false then
 	tc = false
 	end
-
+end
 until tc == false
 SetVehicleHandlingField(vehicle,'CHandlingData','fLowSpeedTractionLossMult',oldvalue)
 Wait(500)
