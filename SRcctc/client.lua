@@ -59,8 +59,8 @@ repeat
 Wait(0)
 if IsPedGettingIntoAVehicle(playerped) then
 Wait(2000)
-local veh =	GetVehiclePedIsIn(playerped,false)
-local drivebias = GetVehicleHandlingFloat(veh,"CHandlingData", "fDriveBiasFront")
+veh =	GetVehiclePedIsIn(playerped,false)
+drivebias = GetVehicleHandlingFloat(veh,"CHandlingData", "fDriveBiasFront")
 oldvalue = GetVehicleHandlingFloat(vehicle,'CHandlingData','fLowSpeedTractionLossMult')	
 end
 
